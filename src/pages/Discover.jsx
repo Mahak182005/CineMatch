@@ -2,12 +2,14 @@ import { fatchData } from "../Data/api.js";
 import { MovieCart } from "../Components/MovieCart"; 
 import { filterMovie } from "../Logic/search"; // filter logic imported
 import { useState } from "react"; 
+import { MovieDetailModal } from "../Components/MovieDetailModal.jsx";
 
 export function Discover() {
   // 1. States to track search, mood, and genre terms
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMood, setSelectedMood] = useState("All");
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   // 2. Apply your external mood filter logic first
   const moodFilteredMovies = selectedMood !== "All" 
@@ -60,10 +62,18 @@ export function Discover() {
         {/* Movie Grid Rendering */}
         <div className="grid grid-cols-4 my-6 gap-3">
           {filteredMovies.map((movie, index) => (
-            <MovieCart key={movie.id || index} data={movie} />
+           <MovieCart key={movie.id || index} data={movie} onCardClick={setSelectedMovie} />
           ))}
         </div>
       </div>
+
+            {selectedMovie && (
+              <MovieDetailModal
+                movie={selectedMovie}
+                onClose={() => setSelectedMovie(null)}
+              />
+            )}
     </div>
   );
 }
+  

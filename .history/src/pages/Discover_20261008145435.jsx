@@ -3,6 +3,7 @@ import { MovieCart } from "../Components/MovieCart";
 import { useState } from "react";
 export function Discover(){
     const [search, setSearch] = useState("");
+    const [selectedMovie, setSelectedMovie] = useState(null);
     // const [show, setShow] = useState(false);
 
     const filterMovies = fatchData.map((movie)=>{
@@ -57,9 +58,16 @@ export function Discover(){
                         ) */}
                     {
                          fatchData.map((movie)=>{
-                                return <MovieCart data={movie} />
+                                return <MovieCart data={movie} onCardClick={setSelectedMovie} />
                             })
                     }
+
+                    {selectedMovie && (
+                        <MovieDetailModal
+                            movie={selectedMovie}
+                            onClose={() => setSelectedMovie(null)}
+                        />
+                    )}
                 </div>
             </div>
         </div>
