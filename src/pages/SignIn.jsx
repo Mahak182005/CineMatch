@@ -1,48 +1,50 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Navigation handle karne ke liye hooks setup
+  const navigate = useNavigate();
 
   const handleSignInSubmit = (e) => {
     e.preventDefault();
     
     if (!email || !password) {
-      alert("Please enter both email and password.");
+      toast.error("Please enter both email and password.");
       return;
     }
 
-    // 💡 SINK ENGINE LOGIC: LocalStorage se SignUp wala asli registered data fetch kiya
+    // LocalStorage se registered data fetch kiya
     const registeredEmail = localStorage.getItem('registered_user_email');
     const registeredPassword = localStorage.getItem('registered_user_password');
     const registeredName = localStorage.getItem('registered_user_name');
 
-    // 🔍 CONDITION CHECK 1: Agar user ne is browser me kabhi SignUp kiya hi nahi hai
+    // CONDITION 1: Account check
     if (!registeredEmail) {
-      alert("No account found with this email! Please Sign Up first. ⚠️");
-      navigate('/signup'); // Direct signup screen par send kar do
+      toast.error("No account found with this email! Please Sign Up first. ⚠️");
+      navigate('/signup');
       return;
     }
 
-    // 🔍 CONDITION CHECK 2: Inputs ko stored SignUp data se completely match karo
+    // CONDITION 2: Email and password match
     const inputEmailClean = email.toLowerCase().trim();
     const storedEmailClean = registeredEmail.toLowerCase().trim();
 
     if (inputEmailClean === storedEmailClean && password === registeredPassword) {
-      // ✅ MATCH HO GAYA! Ab user ko secure login access credentials authorized karo
+      
+      // Login successful
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('user_profile_name', registeredName || 'Explorer');
 
-      alert(`Login Successful! Welcome back, ${registeredName || 'Explorer'} 🚀`);
+      toast.success(`Login Successful! Welcome back, ${registeredName || 'Explorer'} 🚀`);
 
-      // Dashboard routing redirect layer parameters mapping execute ki
+      // Dashboard redirect
       navigate('/');
-      window.location.reload(); // Matrix state routing parameters ko dynamic update karne ke liye refresh trigger
+
     } else {
-      // ❌ MATCH NAHI HUA! Galat details hone par message show karo
-      alert("Incorrect Email or Password! Please try again. ❌");
+      toast.error("Incorrect Email or Password! Please try again. ❌");
     }
   };
 

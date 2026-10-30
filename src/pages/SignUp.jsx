@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function SignUp() {
   const [name, setName] = useState('');
@@ -11,18 +13,15 @@ export function SignUp() {
     e.preventDefault();
     
     if (!name || !email || !password) {
-      alert("Please fill in all the details.");
+      toast.error("Please fill in all the details.");
       return;
     }
 
-    // 💡 सिर्फ डेटा रजिस्टर किया, लॉगिन टोकन अभी 'true' नहीं करेंगे!
     localStorage.setItem('registered_user_name', name);
     localStorage.setItem('registered_user_email', email.toLowerCase().trim());
     localStorage.setItem('registered_user_password', password);
     
-    alert(`Registration Successful, ${name}! Now please Sign In to access your space. ✨`);
-    
-    // 🚀 अब शक्ल देखने के लिए सीधे साइन-इन वाले गेट पर ही भेजेंगे!
+    toast.success(`Registration Successful, ${name}! Now please Sign In to access your space. ✨`);
     navigate('/signin');
   };
 
@@ -72,7 +71,6 @@ export function SignUp() {
             <label className="block text-zinc-400 text-xs font-semibold mb-1.5 tracking-wide">Password</label>
             <input 
               type="password" 
-              placeholder="••••••••" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-zinc-900/40 border border-zinc-800 rounded-xl py-2 px-3 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-red-900/60"

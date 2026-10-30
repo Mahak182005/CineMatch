@@ -1,10 +1,15 @@
 import { fatchData } from "../Data/api.js"; 
 import { MovieCart } from "../Components/MovieCart"; 
 import { filterMovie } from "../Logic/search"; // filter logic imported
-import { useState } from "react"; 
+import { useState, useEffect } from "react"; 
 import { MovieDetailModal } from "../Components/MovieDetailModal.jsx";
 
 export function Discover() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // 1. States to track search, mood, and genre terms
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMood, setSelectedMood] = useState("All");
@@ -35,7 +40,7 @@ export function Discover() {
   });
 
   return (
-    <div className="py-20">
+    <div className="py-20 h-max-screen">
       <div className="pt-10 px-25">
         <div className="font-semibold text-lg">
           <p className="text-white">Discover movies</p>

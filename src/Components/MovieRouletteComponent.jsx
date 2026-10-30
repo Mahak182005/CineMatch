@@ -65,7 +65,7 @@ export function MovieRouletteComponent({ onClose }) {
             disabled={isRolling}
             className="mt-6 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 disabled:from-zinc-800 disabled:to-zinc-800 disabled:text-zinc-500 text-white font-bold text-xs px-8 py-3 rounded-full transition-all shadow-lg shadow-pink-950/40 cursor-pointer tracking-wide active:scale-95"
           >
-            {isRolling ? 'Spinning...' : 'Spin the wheel'}
+            {isRolling ? 'Spinning...' : 'Spin the Dice'}
           </button>
 
           {/* RANDOM MOVIE MATCH RESULT DISPLAY SLIDE */}

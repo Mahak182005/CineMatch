@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { fatchData } from '../Data/api';
 import { MovieCart } from '../Components/MovieCart';
 import { MovieDetailModal } from '../Components/MovieDetailModal';
+import { toast } from 'react-toastify';
 
 export function Profile() {
     const [historyMovies, setHistoryMovies] = useState([]);
@@ -43,14 +44,17 @@ export function Profile() {
     }, []);
 
     // 🚪 LOG OUT ACTION DISPATCHER HANDLER
-    const handleLogout = () => {
-        // Sirf login state token urao, user ka account credentials mat delete karna!
+   const handleLogout = () => {
         localStorage.removeItem('isLoggedIn');
-        
-        alert("Logged out successfully. Redirecting securely back to gate portal... 🚪");
-        
-        // Direct browser routing window bypass update
-        window.location.href = '/signin';
+
+        toast.success("Logged out successfully! 🚪", {
+            position: "top-right",
+            autoClose: 2000,
+        });
+
+        setTimeout(() => {
+            window.location.href = '/signin';
+        }, 2000);
     };
 
     return (
